@@ -30,7 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Try playing music (might require user interaction policy, which click satisfies)
             // Note: User must set src in HTML for this to work, protecting from empty src error
             if (bgMusic.querySelector('source').src) {
-                bgMusic.play().catch(e => console.log("Audio play failed (likely empty src):", e));
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    playPauseBtn.innerText = "⏸ Pause Music";
+                }).catch(e => console.log("Audio play failed (likely empty src):", e));
             }
         }, 1000);
     });
