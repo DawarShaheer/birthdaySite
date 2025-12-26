@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Jiya! 🌸</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Quicksand:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Background Decoration -->
+    <div id="background-decorations"></div>
+
+    <!-- 1. Hero / Landing Section -->
+    <section id="hero" class="full-screen center-content">
+        <div class="hero-content">
+            <h1 class="bounce-in">🎉 Happy Birthday Jiya 🎉</h1>
+            <h2 class="fade-in-delay">27 December</h2>
+            <button id="start-btn" class="pulse-btn">Tap to Start the Surprise 🎁</button>
+        </div>
+    </section>
+
+    <!-- Main Content Container (Hidden initially) -->
+    <main id="main-content" class="hidden">
+
+        <!-- 2. Emotional Message -->
+        <section id="message-section" class="content-section">
+            <div class="card glass-effect">
+                <p id="typing-text"></p>
+            </div>
+        </section>
+
+        <!-- 3. Interactive Surprise -->
+        <section id="surprise-section" class="content-section">
+            <!-- Gift Box -->
+            <div class="surprise-container">
+                <h3>Open your gift!</h3>
+                <div id="gift-box" class="gift-box">
+                    <div class="lid">
+                        <div class="bow"></div>
+                    </div>
+                    <div class="box"></div>
+                </div>
+                <p id="gift-message" class="hidden-message">You are the best gift to the world! 🌟</p>
+            </div>
+
+            <!-- Cake -->
+            <div class="cake-container">
+                <h3>Make a wish & blow the candles! 🎂</h3>
+                <div id="birthday-cake" class="cake">
+                    <div class="candles">
+                        <div class="candle">
+                            <div class="flame"></div>
+                        </div>
+                        <div class="candle">
+                            <div class="flame"></div>
+                        </div>
+                        <div class="candle">
+                            <div class="flame"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Memory/Compliment Cards -->
+        <section id="memories-section" class="content-section">
+            <h2>Why You're Special 💖</h2>
+            <div class="cards-grid">
+                <div class="card flip-card">
+                    <div class="card-inner">
+                        <div class="card-front">🌸</div>
+                        <div class="card-back">You radiate kindness everywhere you go.</div>
+                    </div>
+                </div>
+                <div class="card flip-card">
+                    <div class="card-inner">
+                        <div class="card-front">💫</div>
+                        <div class="card-back">Your smile is literally sunshine!</div>
+                    </div>
+                </div>
+                <div class="card flip-card">
+                    <div class="card-inner">
+                        <div class="card-front">🦄</div>
+                        <div class="card-back">You are one of a kind.</div>
+                    </div>
+                </div>
+                <div class="card flip-card">
+                    <div class="card-inner">
+                        <div class="card-front">🌈</div>
+                        <div class="card-back">Thanks for being such an amazing friend.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Countdown & Date -->
+        <section id="countdown-section" class="content-section">
+            <h2>The Big Day</h2>
+            <div id="countdown-display">
+                <div class="time-unit"><span id="days">0</span> Days</div>
+                <div class="time-unit"><span id="hours">0</span> Hrs</div>
+                <div class="time-unit"><span id="minutes">0</span> Mins</div>
+            </div>
+        </section>
+
+        <!-- 6. Final Wish -->
+        <!-- 6. Final Wish -->
+        <!-- User requested removal of Send Love button section -->
+
+    </main>
+
+    <!-- Music Control -->
+    <div id="music-control" class="music-toggle">
+        <button id="play-pause-btn">🎵 Play Music</button>
+    </div>
+
+    <!-- Hidden audio element -->
+    <audio id="bg-music" loop>
+        <source src="happy_birthday.mp3" type="audio/mp3">
+    </audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
