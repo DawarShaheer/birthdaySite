@@ -299,14 +299,15 @@ button {
     position: absolute;
     top: -12px;
     left: 1px;
-    opacity: 0;
     /* Off by default */
     box-shadow: 0 0 10px orange;
-    animation: flicker 0.5s infinite alternate;
+    opacity: 0;
+    transition: opacity 0.5s;
 }
 
 .candle.lit .flame {
     opacity: 1;
+    animation: flicker 0.5s infinite alternate;
 }
 
 @keyframes flicker {
