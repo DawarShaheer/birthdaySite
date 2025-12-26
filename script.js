@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. Entrance ---
     startBtn.addEventListener('click', () => {
+        // Request Mic immediately on user interaction
+        initMicrophone();
+
         heroSection.style.opacity = '0';
         setTimeout(() => {
             heroSection.style.display = 'none';
@@ -27,8 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Start the experience
             startTypingMessage();
-            // Try playing music (might require user interaction policy, which click satisfies)
-            // Note: User must set src in HTML for this to work, protecting from empty src error
+            // Try playing music
             if (bgMusic.querySelector('source').src) {
                 bgMusic.play().then(() => {
                     isPlaying = true;
@@ -75,26 +77,83 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Cake Candles
+    // Cake Candles & Microphone
     const candles = document.querySelectorAll('.candle');
     const cakeTitle = document.querySelector('.cake-container h3');
+    let candlesExtinguished = 0;
 
+    // Toggle (Click to extinguish if Mic fails/user prefers)
     candles.forEach(candle => {
         candle.addEventListener('click', () => {
-            candle.classList.toggle('lit');
-            // Check if all are lit
-            const allLit = document.querySelectorAll('.candle.lit').length === candles.length;
-            if (allLit) {
-                cakeTitle.innerText = "Yay! Happy Birthday! 🎂";
-                confetti({
-                    particleCount: 150,
-                    spread: 100,
-                    origin: { y: 0.7 },
-                    colors: ['#ffe4c4', '#ffc0cb', '#ffd700']
-                });
+            if (candle.classList.contains('lit')) {
+                extinguishCandle(candle);
             }
         });
     });
+
+    function extinguishCandle(candle) {
+        candle.classList.remove('lit');
+        candlesExtinguished++;
+
+        // Check if all out
+        if (candlesExtinguished === candles.length) {
+            cakeTitle.innerText = "Yay! Happy Birthday! 🎂";
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.7 },
+                colors: ['#ffe4c4', '#ffc0cb', '#ffd700']
+            });
+        }
+    }
+
+    // Microphone Logic
+    function initMicrophone() {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            console.log("Microphone API not supported");
+            return;
+        }
+
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(function (stream) {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const analyser = audioContext.createAnalyser();
+                const microphone = audioContext.createMediaStreamSource(stream);
+                const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
+
+                analyser.smoothingTimeConstant = 0.8;
+                analyser.fftSize = 1024;
+
+                microphone.connect(analyser);
+                analyser.connect(scriptProcessor);
+                scriptProcessor.connect(audioContext.destination);
+
+                scriptProcessor.onaudioprocess = function () {
+                    const array = new Uint8Array(analyser.frequencyBinCount);
+                    analyser.getByteFrequencyData(array);
+                    let values = 0;
+                    const length = array.length;
+                    for (let i = 0; i < length; i++) {
+                        values += array[i];
+                    }
+                    const average = values / length;
+
+                    // Threshold for "blowing"
+                    // Adjust this value if too sensitive or not sensitive enough
+                    if (average > 40) {
+                        // Blow out candles one by one or all? Let's do all for effect
+                        candles.forEach(candle => {
+                            if (candle.classList.contains('lit')) {
+                                extinguishCandle(candle);
+                            }
+                        });
+                    }
+                };
+            })
+            .catch(function (err) {
+                console.log("Microphone access denied or error: " + err);
+            });
+    }
 
     // --- 4. Cards Mobile FLip ---
     const cards = document.querySelectorAll('.flip-card');
