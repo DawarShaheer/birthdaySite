@@ -78,8 +78,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Cake Candles & Microphone
+    // Cake Candles & Microphone
     const candles = document.querySelectorAll('.candle');
     const cakeTitle = document.querySelector('.cake-container h3');
+    const specialMsgContainer = document.getElementById('special-message-container');
+    const relightBtn = document.getElementById('relight-btn');
     let candlesExtinguished = 0;
 
     // Toggle (Click to extinguish if Mic fails/user prefers)
@@ -98,6 +101,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Check if all out
         if (candlesExtinguished === candles.length) {
             cakeTitle.innerText = "Yay! Happy Birthday! 🎂";
+
+            // Show special message
+            setTimeout(() => {
+                specialMsgContainer.classList.remove('hidden');
+            }, 1000);
+
             confetti({
                 particleCount: 150,
                 spread: 100,
@@ -106,6 +115,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+
+    // Relight Button
+    relightBtn.addEventListener('click', () => {
+        // Reset state
+        candlesExtinguished = 0;
+        candles.forEach(c => c.classList.add('lit'));
+        cakeTitle.innerText = "Make a wish & blow the candles! 🎂";
+
+        // Hide message
+        specialMsgContainer.classList.add('hidden');
+    });
 
     // Microphone Logic
     function initMicrophone() {

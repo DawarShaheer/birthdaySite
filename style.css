@@ -229,6 +229,23 @@ button {
     transform: translateY(0);
 }
 
+/* Message Container */
+.message-container {
+    margin-top: 3rem;
+    animation: fadeIn 1s forwards;
+}
+
+.message-container h2 {
+    color: var(--dark-pink);
+    margin-bottom: 1rem;
+}
+
+.message-container p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
 /* Cake */
 .cake-container {
     margin-top: 4rem;
